@@ -3,6 +3,11 @@ using System.Collections;
 
 public class FingerEvent : MonoBehaviour {
 
+	private tk2dTextMesh text;
+	void Awake(){
+		text = GameObject.FindGameObjectWithTag("Player").GetComponent<tk2dTextMesh>();
+		
+	}
 	void OnSwipe( SwipeGesture gesture ) 
 	{
 		// Total swipe vector (from start to end position)
@@ -14,5 +19,6 @@ public class FingerEvent : MonoBehaviour {
 		// Approximate swipe direction
 		FingerGestures.SwipeDirection direction = gesture.Direction;
 		Debug.Log ("asdfadf   " + direction);
+		text.text = ""+direction;
 	}
 }
