@@ -9,15 +9,12 @@ public class GameManager : MonoBehaviour {
 	private Tile tile;
 
 	private Game _game;
+
+	public GameObject scoreText;
+	public GameObject hScoreText;
 	// Use this for initialization
 	void Start () {
-		Tile[,] a = new Tile[2,2];
 
-		Tile a1 = new Tile(new GamePostion(1,1),2);
-		Debug.Log(a1);
-		a[1,1] = a1;
-		Debug.Log(a[1,1]);
-		Tile t = a[1,1];
 	}
 	
 	// Update is called once per frame
@@ -31,10 +28,12 @@ public class GameManager : MonoBehaviour {
 	void StartGame(){
 		currentScore = 0;
 		int tempHightestScore = PlayerPrefs.GetInt("HightestScore");
-		Debug.Log(tempHightestScore);
+		hightestScore = tempHightestScore;
+		hScoreText.GetComponent<tk2dTextMesh>().text = tempHightestScore.ToString();
+		scoreText.GetComponent<tk2dTextMesh>().text = "0";
 		_game = gameObject.GetComponent<Game>();
 		_game.setup(4);
-//		hightestScore = PlayerPrefs.GetInt("HightestScore");
+
 	}
 
 	void option(Game game){
@@ -68,14 +67,22 @@ public class GameManager : MonoBehaviour {
 			stri = stri + s + "\n";
 		}
 		Debug.Log(stri);
+
+		currentScore = game.score;
+		if (currentScore > hightestScore) {
+			PlayerPrefs.SetInt("HightestScore",currentScore);
+			hightestScore = currentScore;
+			hScoreText.GetComponent<tk2dTextMesh>().text = hightestScore.ToString();
+		}
+		scoreText.GetComponent<tk2dTextMesh>().text = currentScore.ToString();
 	}
 	void OnSwipe( SwipeGesture gesture ) 
 	{
 		// Total swipe vector (from start to end position)
-		Vector2 move = gesture.Move;
+//		Vector2 move = gesture.Move;
 		
 		// Instant gesture velocity in screen units per second
-		float velocity = gesture.Velocity;
+//		float velocity = gesture.Velocity;
 		
 		// Approximate swipe direction
 		FingerGestures.SwipeDirection direction = gesture.Direction;
