@@ -1,23 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public struct Tile{
+public class Tile{
 
-	public int  x { get;  set; }
-	public int  y { get;  set; }
+	public int  x;
+	public int  y;
 
-	public int  value { get;  set; }
-	public Hashtable previousPosition {get;  set;}
-	public Tile?[] mergedFrom {get;  set;}
+	public int  value;
+	public Hashtable previousPosition;
+	public Tile[] mergedFrom;
 
-	public bool enable {get;set;}
+	
 
-	public Tile(Vector2 postion,int value = 2):this(){
-		this.x = (int)postion.x;
-		this.y = (int)postion.y;
+	public Tile(GamePostion postion,int value){
+		this.x = postion.x;
+		this.y = postion.y;
 		this.value = value;
 		this.previousPosition = new Hashtable();
-		this.enable = true;
+		
 	}
 
 
@@ -32,12 +32,18 @@ public struct Tile{
 		this.previousPosition.Add("y",this.y);
 	}
 
-	public void updatePostion(Vector2 position){
-		this.x = (int)position.x;
-		this.y = (int)position.y;
+	public void updatePostion(GamePostion position){
+		Debug.Log("updatePostion:" + position.ToString());
+		this.x = position.x;
+		this.y = position.y;
+		Debug.Log("x:"+this.x);
+		Debug.Log("y:"+this.y);
 	}
 
 
 
+	public string ToString(){
+		return "x :"+this.x + "  y:"+this.y + " value:"+ this.value;
 
+	}
 }

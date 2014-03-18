@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public struct Grid{
+public class Grid{
 	public int size;
 	public Tile[,] cells;
 	public Grid(int size){
@@ -13,54 +13,61 @@ public struct Grid{
 	}
 
 
-	public List<Vector2> availableCells(){
-		List<Vector2> cells =  new List<Vector2>();
+	public List<GamePostion> availableCells(){
+		List<GamePostion> cells =  new List<GamePostion>();
 		for(int i = 0; i < this.size;i++){
 			for(int j = 0; j < this.size;j++){
 				Tile t = this.cells[i,j];
-				if(t.enable){
-					cells.Add( new Vector2(t.x,t.y));
+				if(t == null){
+					GamePostion gp = new GamePostion(i,j);
+					cells.Add( gp);
 				}
 			}
 		}
+
 		return cells;
 	}
 
-	public Vector2 randomAvailableCell(){
-		List<Vector2> cells = this.availableCells();
+	public GamePostion randomAvailableCell(){
+		List<GamePostion> cells = this.availableCells();
 		return cells[Random.Range(0,cells.Count)];
 	}
 
 	public bool cellsAvailable(){
+		//Debug.Log("Grid cellsAvailable  his.availableCells().Count:"+this.availableCells().Count);
 		return this.availableCells().Count > 0 ;
 	}
 
 
-	public bool cellAvailable(Vector2 position){
+	public bool cellAvailable(GamePostion position){
 		return !this.cellOccupied(position);
 	}
 
-	public bool cellOccupied(Vector2 postion){
+	public bool cellOccupied(GamePostion postion){
+		//Debug.Log("cellOccupied x:"+postion.x + "   y:"+postion.y+"   bool:"+(this.cellContent(postion) != null));
 		return this.cellContent(postion) != null;
 	}
 
-	public Tile? cellContent(Vector2 postion){
+	public Tile cellContent(GamePostion postion){
 		if(this.withinBounds(postion)){
-			return this.cells[(int)postion.x,(int)postion.y];
+			return this.cells[postion.x,postion.y];
 		}
 		return null;
 	}
 
 
 	public void insertTile(Tile tile){
+		Debug.Log("insertTile x:"+tile.x + "  y:"+tile.y);
 		this.cells[tile.x,tile.y] = tile;
 	}
 
 	public void removeTile(Tile tile){
-		this.cells[tile.x,tile.y].enable = false;
+		Debug.Log("removeTile x:"+tile.x + "  y:"+tile.y);
+		this.cells[tile.x,tile.y] = null;
 	}
 
-	public bool withinBounds(Vector2 position){
+	public bool withinBounds(GamePostion position){
+//		Debug.Log("withinBounds  x:"+position.x + "   y:"+position.y+"    "+(position.x >= 0 && position.x < this.size && position.y >= 0 && position.y < this.size));
 		return position.x >= 0 && position.x < this.size && position.y >= 0 && position.y < this.size;
 	}
 
