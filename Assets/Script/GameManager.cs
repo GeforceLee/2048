@@ -6,12 +6,17 @@ public class GameManager : MonoBehaviour {
 	private int currentScore = 0;
 	private int hightestScore = 0;
 
-	private Tile tile;
+	public GameObject tile;
 
 	private Game _game;
 
 	public GameObject scoreText;
 	public GameObject hScoreText;
+
+	public GameObject bgObject;
+
+	Vector3 firstPostion;
+	float tileBetween = 1.44f;
 	// Use this for initialization
 	void Start () {
 
@@ -22,11 +27,20 @@ public class GameManager : MonoBehaviour {
 	
 	}
 	void Awake(){
+		float x = bgObject.transform.position.x-2.16f;
+		
+		float y = bgObject.transform.position.y+2.16f;
+		
+		firstPostion = new Vector3(x,y,0f);
 		StartGame();
 	}
 
 	void StartGame(){
 		currentScore = 0;
+		GameObject[] allTile = GameObject.FindGameObjectsWithTag("Tile");
+		for(int i = 0;i<allTile.Length;i++){
+			Destroy(allTile[i]);
+		}
 		int tempHightestScore = PlayerPrefs.GetInt("HightestScore");
 		hightestScore = tempHightestScore;
 		hScoreText.GetComponent<tk2dTextMesh>().text = tempHightestScore.ToString();
@@ -36,37 +50,59 @@ public class GameManager : MonoBehaviour {
 
 	}
 
+	public Vector3 getTilePosition(int x,int y,int z=0){
+		Vector3 result = new Vector3(firstPostion.x+x*tileBetween,firstPostion.y- y*tileBetween,z);
+		
+		return result;
+	}
+
+
 	void option(Game game){
 		GameObject[] gameobjects =  GameObject.FindGameObjectsWithTag("TileText");
-		string stri = "";
+
 		for(int i =0;i<_game.grid.size;i++){
-			string s = "";
 			for(int j =0;j<_game.grid.size;j++){
-				Tile t = _game.grid.cells[j,i];
+				Tile t = _game.grid.cells[i,j];
 				if(t != null){
-					Tile t1 = (Tile)t;
-					s = s + t1.ToString();
-				}else{
-					s = s +"     0         ";
-				}
-				string name = "TextMesh"+j+i;
-				string str;
-				foreach(GameObject go in gameobjects){
-					if(go.name == name){
-						if(t != null){
-							Tile tile = (Tile)t;
-							str = ""+tile.value;
+					GameObject newTile;
+					if(t.mergedFrom == null){
+						if(t.previousPosition != null){
+							int x = (int)t.previousPosition["x"];
+							int y = (int)t.previousPosition["y"];
+							newTile = GameObject.Find("Tile"+x+y);
+							newTile.GetComponent<TIleScript>().move(getTilePosition(i,j));
+							newTile.GetComponent<TIleScript>().setCurrentValue(t.value);
+							newTile.name = "Tile"+i+j;
 						}else{
-							str = "";
-						}	
-						go.GetComponent<tk2dTextMesh>().text = str;
+							addTile(i,j,t.value);
+//							 newTile = Instantiate(tile,getTilePosition(i,j),Quaternion.identity) as GameObject;
+						}
+					}else{
+						Debug.Log(t.mergedFrom[0].ToString());
+						Debug.Log(t.mergedFrom[1].ToString());
+						int x1 = (int)t.mergedFrom[0].previousPosition["x"];
+						int y1 = (int)t.mergedFrom[0].previousPosition["y"];
+						GameObject perTile1 = GameObject.Find("Tile"+x1+y1);
+						perTile1.GetComponent<TIleScript>().move(getTilePosition(i,j,1));
+						Destroy(perTile1,0.39f);
+
+						int x2 = (int)t.mergedFrom[1].previousPosition["x"];
+						int y2 = (int)t.mergedFrom[1].previousPosition["y"];
+						GameObject perTile2 = GameObject.Find("Tile"+x2+y2);
+						perTile2.GetComponent<TIleScript>().move(getTilePosition(i,j,1));
+						Destroy(perTile2,0.39f);
+
+						newTile = Instantiate(tile,getTilePosition(i,j),Quaternion.identity) as GameObject;
+						newTile.GetComponent<TIleScript>().setCurrentValue(t.value);
+						newTile.name = "Tile"+i+j;
 					}
 
 				}
+
 			}
-			stri = stri + s + "\n";
+
 		}
-		Debug.Log(stri);
+
 
 		currentScore = game.score;
 		if (currentScore > hightestScore) {
@@ -76,22 +112,23 @@ public class GameManager : MonoBehaviour {
 		}
 		scoreText.GetComponent<tk2dTextMesh>().text = currentScore.ToString();
 	}
+
+
+	IEnumerable addTile(int x,int y ,int value){
+
+		GameObject newTile = Instantiate(tile,getTilePosition(x,y),Quaternion.identity) as GameObject;
+		newTile.GetComponent<TIleScript>().setCurrentValue(value);
+		newTile.name = "Tile"+x+y;
+		yield return new WaitForSeconds(0.1f);
+	}
 	void OnSwipe( SwipeGesture gesture ) 
 	{
-		// Total swipe vector (from start to end position)
-//		Vector2 move = gesture.Move;
-		
-		// Instant gesture velocity in screen units per second
-//		float velocity = gesture.Velocity;
 		
 		// Approximate swipe direction
 		FingerGestures.SwipeDirection direction = gesture.Direction;
 		Debug.Log("OnSwipe  :"+direction);
 
-//		hightestScore ++;
-//		PlayerPrefs.SetInt("HightestScore",hightestScore);
-//		int i = Random.Range(0,2);
-//		Debug.Log(i);
+
 		switch(direction){
 			case FingerGestures.SwipeDirection.Right:
 				_game.move(Direction.DirectionRight);
@@ -109,7 +146,5 @@ public class GameManager : MonoBehaviour {
 			break;
 		}
 
-
-		
 	}
 }

@@ -68,22 +68,22 @@ public class Game : MonoBehaviour {
 	}
 
 	public void moveTile(Tile tile,GamePostion cell){
-		Debug.Log("moveTile:" + cell.ToString());
+//		Debug.Log("moveTile:" + cell.ToString());
 		grid.cells[tile.x,tile.y] = null;
 		Tile o = grid.cells[tile.x,tile.y];
-		Debug.Log("moveTile null :"+o == null);
+//		Debug.Log("moveTile null :"+o == null);
 		grid.cells[cell.x,cell.y] = tile;
-		Debug.Log("moveTile hou :"+grid.cells[cell.x,cell.y].ToString());
-		Debug.Log("before up:"+tile.ToString());
+//		Debug.Log("moveTile hou :"+grid.cells[cell.x,cell.y].ToString());
+//		Debug.Log("before up:"+tile.ToString());
 		tile.updatePostion(cell);
-		Debug.Log("after up:"+tile.ToString());
+//		Debug.Log("after up:"+tile.ToString());
 	}
 
 
 
 
 	public void move(Direction direction){
-		Debug.Log("移动");
+//		Debug.Log("移动");
 		GamePostion vector = getVector(direction);
 		Hashtable traversals = buildTraversals(vector);
 		prepareTiles();
@@ -99,12 +99,12 @@ public class Game : MonoBehaviour {
 				tile = grid.cellContent(cell);
 	
 				if(tile != null){
-					Debug.Log("找到Tile  x:"+tile.x + " y:"+tile.y);
 					Hashtable postions = findFarthestPosition(cell,vector);
 					Tile next = grid.cellContent((GamePostion)postions["next"]);
 					if(next !=null && next.value == tile.value && next.mergedFrom == null){
 
-						Debug.Log("找到合并的tile x:"+next.x + "   y:"+next.y);
+						Debug.Log("找到合并的tile :"+tile.ToString());
+						Debug.Log("找到合并的next :"+next.ToString());
 						Tile merged = new Tile((GamePostion)postions["next"],tile.value*2);
 						merged.mergedFrom = new Tile[]{tile,next};
 
@@ -122,9 +122,6 @@ public class Game : MonoBehaviour {
 					}else{
 						moveTile(tile,(GamePostion)postions["farthest"]);
 					}
-
-					Debug.Log("cell:"+cell.ToString());
-					Debug.Log("tile:"+new GamePostion(tile.x,tile.y).ToString());
 					if(!positionsEqual(cell,new GamePostion(tile.x,tile.y))){
 						moved = true;
 					}
@@ -193,7 +190,7 @@ public class Game : MonoBehaviour {
 
 
 	public Hashtable findFarthestPosition(GamePostion cell,GamePostion vector){
-		Debug.Log("findFarthestPosition cell  x:"+cell.x + "   y:"+cell.y);
+//		Debug.Log("findFarthestPosition cell  x:"+cell.x + "   y:"+cell.y);
 
 		GamePostion previous;
 
@@ -205,8 +202,8 @@ public class Game : MonoBehaviour {
 		Hashtable result = new Hashtable();
 		result.Add("farthest",previous);
 		result.Add("next",cell);
-		Debug.Log("之前的坐标farthest x:"+ previous.ToString());
-		Debug.Log("最近的坐标next x:"+ cell.ToString());
+//		Debug.Log("之前的坐标farthest x:"+ previous.ToString());
+//		Debug.Log("最近的坐标next x:"+ cell.ToString());
 		return result;
 	}
 

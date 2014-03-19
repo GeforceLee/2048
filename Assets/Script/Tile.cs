@@ -16,28 +16,21 @@ public class Tile{
 		this.x = postion.x;
 		this.y = postion.y;
 		this.value = value;
-		this.previousPosition = new Hashtable();
+
 		
 	}
 
 
 	public void savePostion(){
-		if(this.previousPosition.Contains("x")){
-			this.previousPosition.Remove("x");
-		}
+		this.previousPosition = new Hashtable();
 		this.previousPosition.Add("x",this.x);
-		if(this.previousPosition.Contains("y")){
-			this.previousPosition.Remove("y");
-		}
 		this.previousPosition.Add("y",this.y);
 	}
 
 	public void updatePostion(GamePostion position){
-		Debug.Log("updatePostion:" + position.ToString());
+		Debug.Log("updatePostion:" + position.ToString() + "  yuan x:"+this.x+"    y:"+this.y);
 		this.x = position.x;
 		this.y = position.y;
-		Debug.Log("x:"+this.x);
-		Debug.Log("y:"+this.y);
 	}
 
 
