@@ -23,8 +23,12 @@ public class TIleScript : MonoBehaviour {
 	float duringTime = 0.4f;
 	Vector3 targetPostion;
 
-	public int value;
+	public int currentValue=0;
 	public GameObject text;
+	public int targetValue;
+	
+
+
 	public void setCurrentValue(int value){
 		Color t;
 		switch(value){
@@ -67,6 +71,7 @@ public class TIleScript : MonoBehaviour {
 		}
 		gameObject.GetComponent<tk2dSprite>().color = t;
 		string str = ""+value;
+		currentValue = value;
 		text.GetComponent<tk2dTextMesh>().text = str;
 		if(str.Length == 1){
 			text.GetComponent<tk2dTextMesh>().scale = new Vector3(1.2f,1.2f,1.2f);
@@ -85,35 +90,45 @@ public class TIleScript : MonoBehaviour {
 
 	public void playScaleAnim(){
 		Animator anim = gameObject.GetComponent<Animator>();
-		anim.SetTrigger("Scale");
+		anim.SetTrigger("TileScale"); 
 	}
 	// Use this for initialization
 	void Start () {
-
+		Animator anim = gameObject.GetComponent<Animator>();
+//		anim.SetTrigger("TileInit");
 	}
 
 
-	public void move(Vector3 target){
+	public void move(Vector3 target,int value){
+		Debug.Log("move target value:"+ value  +"  currentValue:"+currentValue +" moved:"+moved);
 		if(!moved){
-			moved = true;
 			movedTime = 0;
 			targetPostion = target;
+			targetValue = value;
+			moved = true;
 		}
 	}
 
 
 	void Update(){
-
 		if(moved){
 			movedTime += Time.deltaTime;
 			float lerp = 0;
 			if(movedTime>= duringTime){
+				Debug.Log("update move over");
 				moved = false;
 				lerp = 1.0f;
 			}else{
 				lerp = movedTime/duringTime;
 			}
 			transform.position = Vector3.Lerp(transform.position,targetPostion,lerp);
+
+			if(targetValue > currentValue && movedTime>duringTime*0.6f){
+				Debug.Log("targetValue:"+targetValue+ " currentValue:"+currentValue+" movedTime:"+movedTime+" duringTime:"+ duringTime*0.6f);
+				setCurrentValue(targetValue);
+				playScaleAnim();
+			}
 		}
+
 	}
 }
