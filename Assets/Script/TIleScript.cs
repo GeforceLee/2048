@@ -20,7 +20,7 @@ public class TIleScript : MonoBehaviour {
 
 	bool moved = false;
 	float movedTime = 0f;
-	float duringTime = 0.4f;
+	float duringTime = 0.2f;
 	Vector3 targetPostion;
 
 	public int currentValue=0;
@@ -73,16 +73,12 @@ public class TIleScript : MonoBehaviour {
 		string str = ""+value;
 		currentValue = value;
 		text.GetComponent<tk2dTextMesh>().text = str;
-		if(str.Length == 1){
-			text.GetComponent<tk2dTextMesh>().scale = new Vector3(1.2f,1.2f,1.2f);
-		}else if(str.Length == 2){
-			text.GetComponent<tk2dTextMesh>().scale = new Vector3(0.9f,0.9f,0.9f);
+		if(str.Length >3){
+			text.GetComponent<tk2dTextMesh>().scale = new Vector3(0.55f,0.55f,0.55f);
 		}else if(str.Length == 3){
 			text.GetComponent<tk2dTextMesh>().scale = new Vector3(0.75f,0.75f,0.75f);
-		}else if(str.Length == 4){
-			text.GetComponent<tk2dTextMesh>().scale = new Vector3(0.65f,0.65f,0.65f);
-		}else{
-			text.GetComponent<tk2dTextMesh>().scale = new Vector3(0.55f,0.55f,0.55f);
+		}else {
+			text.GetComponent<tk2dTextMesh>().scale = new Vector3(1f,1f,1f);
 		}
 
 		

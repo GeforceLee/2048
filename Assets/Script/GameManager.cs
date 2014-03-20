@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour {
 
 	public GameObject bgObject;
 
+	public GameObject UI;
+
 	Vector3 firstPostion;
 	float tileBetween = 1.44f;
 
@@ -38,7 +40,7 @@ public class GameManager : MonoBehaviour {
 		StartGame();
 	}
 
-	void StartGame(){
+	public void StartGame(){
 		currentScore = 0;
 		GameObject[] allTile = GameObject.FindGameObjectsWithTag("Tile");
 		for(int i = 0;i<allTile.Length;i++){
@@ -50,6 +52,7 @@ public class GameManager : MonoBehaviour {
 		scoreText.GetComponent<tk2dTextMesh>().text = "0";
 		_game = gameObject.GetComponent<Game>();
 		_game.setup(4);
+		hideUI();
 
 	}
 
@@ -99,7 +102,7 @@ public class GameManager : MonoBehaviour {
 						GameObject perTile1 = GameObject.Find("Tile"+x1+y1);
 						perTile1.GetComponent<TIleScript>().move(getTilePosition(i,j,1),t.mergedFrom[0].value);
 						perTile1.name = "Tile";
-						Destroy(perTile1,0.3f);
+						Destroy(perTile1,0.1f);
 						int x2 = (int)t.mergedFrom[1].previousPosition["x"];
 						int y2 = (int)t.mergedFrom[1].previousPosition["y"];
 						GameObject perTile2 = GameObject.Find("Tile"+x2+y2);
@@ -132,24 +135,7 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 
-//		for(int i =0;i<_game.grid.size;i++){
-//			for(int j =0;j<_game.grid.size;j++){
-//				Tile t = _game.grid.cells[i,j];
-//				if(t != null){
-//					GameObject newTile;
-//					if(t.mergedFrom == null){
-//						if(t.previousPosition == null){
-//							newTile = Instantiate(tile,getTilePosition(i,j),Quaternion.identity) as GameObject;
-//							newTile.GetComponent<TIleScript>().setCurrentValue(t.value);
-//							newTile.name = "Tile"+i+j;
-//							Debug.Log("new   x:"+i+" y:"+j +" value:"+t.value);
-//						}
-//					}
-//				}
-//				
-//			}
-//			
-//		}
+
 
 
 
@@ -162,13 +148,27 @@ public class GameManager : MonoBehaviour {
 			hScoreText.GetComponent<tk2dTextMesh>().text = hightestScore.ToString();
 		}
 		scoreText.GetComponent<tk2dTextMesh>().text = currentScore.ToString();
+
+
+		if(_game.over){
+			showUI();
+		}
 	}
 
-	
+
+	public void showUI(){
+		UI.transform.position = bgObject.transform.position;
+	}
+	public void hideUI(){
+		UI.transform.position = new Vector3(10,10,0);
+	}
+
 	void OnSwipe( SwipeGesture gesture ) 
 	{
 		
-		// Approximate swipe direction
+		if(_game.over){
+			return;
+		}
 		FingerGestures.SwipeDirection direction = gesture.Direction;
 		Debug.Log("OnSwipe  :"+direction);
 

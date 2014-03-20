@@ -25,7 +25,7 @@ public class Game : MonoBehaviour {
 		grid = new Grid(s);
 		score = 0;
 		over = false;
-		won = false;
+
 
 		addStartTiles();
 		actuate();
@@ -134,8 +134,9 @@ public class Game : MonoBehaviour {
 		if(moved){
 			addRandomTile();
 			if(!movesAvailable()){
-				//TODO gameover
+
 				Debug.Log("GameOver");
+				this.over = true;
 			}
 			actuate();
 			Debug.Log("move le");
