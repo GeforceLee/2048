@@ -74,11 +74,11 @@ public class TIleScript : MonoBehaviour {
 		currentValue = value;
 		text.GetComponent<tk2dTextMesh>().text = str;
 		if(str.Length >3){
-			text.GetComponent<tk2dTextMesh>().scale = new Vector3(0.55f,0.55f,0.55f);
+			text.GetComponent<tk2dTextMesh>().scale = new Vector3(0.55f,0.55f,0.0f);
 		}else if(str.Length == 3){
-			text.GetComponent<tk2dTextMesh>().scale = new Vector3(0.75f,0.75f,0.75f);
+			text.GetComponent<tk2dTextMesh>().scale = new Vector3(0.75f,0.75f,0.0f);
 		}else {
-			text.GetComponent<tk2dTextMesh>().scale = new Vector3(1f,1f,1f);
+			text.GetComponent<tk2dTextMesh>().scale = new Vector3(0.8f,0.8f,0.0f);
 		}
 
 		
