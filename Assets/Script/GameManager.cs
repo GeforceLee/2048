@@ -22,10 +22,26 @@ public class GameManager : MonoBehaviour {
 
 	public Direction lastDirection;
 
+
+	public bool enableGameCenter = false;
+
 	// Use this for initialization
 	void Start () {
-
+		Social.localUser.Authenticate (ProcessAuthentication);
 	}
+
+	void ProcessAuthentication (bool success) {
+		if (success) {
+			Debug.Log ("Authenticated, checking achievements");
+			enableGameCenter = true;
+			// Request loaded achievements, and register a callback for processing them
+
+		}
+		else
+			Debug.Log ("Failed to authenticate");
+	}
+	
+	
 	
 	// Update is called once per frame
 	void Update () {
@@ -135,17 +151,20 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 
-
-
-
-
-
-
 		currentScore = game.score;
 		if (currentScore > hightestScore) {
 			PlayerPrefs.SetInt("HightestScore",currentScore);
 			hightestScore = currentScore;
 			hScoreText.GetComponent<tk2dTextMesh>().text = hightestScore.ToString();
+			if(enableGameCenter){
+				Social.ReportScore(hightestScore,"com.royalgame.2048.bestscore", result => {
+					if (result)
+						Debug.Log ("Successfully reported achievement progress");
+					else
+						Debug.Log ("Failed to report achievement");
+				});
+			}
+
 		}
 		scoreText.GetComponent<tk2dTextMesh>().text = currentScore.ToString();
 
@@ -161,6 +180,12 @@ public class GameManager : MonoBehaviour {
 	}
 	public void hideUI(){
 		UI.transform.position = new Vector3(10,10,0);
+	}
+
+	public void showGameCenterScore(){
+		if(enableGameCenter){
+			Social.ShowLeaderboardUI();
+		}
 	}
 
 	void OnSwipe( SwipeGesture gesture ) 
