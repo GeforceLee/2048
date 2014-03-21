@@ -29,21 +29,21 @@ public sealed class MobclickAgent:MonoBehaviour {
 //SENDDAILY = 4,      //send log every day's first launch
 //SENDWIFIONLY = 5    //send log when wifi connected
 		
-		MobclickAgent.StartWithAppKeyAndReportPolicyAndChannelId("4f3122f152701529bb000042",0,"Develop");
-		MobclickAgent.SetAppVersion("1.2.1");
-		MobclickAgent.SetLogSendInterval(20);
-		JsonData eventAttributes = new JsonData();
-		eventAttributes["username"] = "Aladdin";
-		eventAttributes["company"] = "Umeng Inc.";
-		
-		MobclickAgent.EventWithAttributes("GameState",JsonMapper.ToJson(eventAttributes));
-		MobclickAgent.SetLogEnabled(true);
-		MobclickAgent.SetCrashReportEnabled(true);
-		MobclickAgent.CheckUpdate();
-		MobclickAgent.UpdateOnlineConfig();
-		MobclickAgent.Event("GameState");
-		MobclickAgent.BeginEventWithLabel("New-GameState","identifierID");
-		MobclickAgent.EndEventWithLabel("New-GameState","identifierID");
+		MobclickAgent.StartWithAppKeyAndReportPolicyAndChannelId("532ac9d156240b2cea0044c4",5,"Apple");
+//		MobclickAgent.SetAppVersion("1.0");
+//		MobclickAgent.SetLogSendInterval(20);
+//		JsonData eventAttributes = new JsonData();
+//		eventAttributes["username"] = "Aladdin";
+//		eventAttributes["company"] = "Umeng Inc.";
+//		
+//		MobclickAgent.EventWithAttributes("GameState",JsonMapper.ToJson(eventAttributes));
+//		MobclickAgent.SetLogEnabled(true);
+//		MobclickAgent.SetCrashReportEnabled(true);
+//		MobclickAgent.CheckUpdate();
+//		MobclickAgent.UpdateOnlineConfig();
+//		MobclickAgent.Event("GameState");
+//		MobclickAgent.BeginEventWithLabel("New-GameState","identifierID");
+//		MobclickAgent.EndEventWithLabel("New-GameState","identifierID");
 #elif UNITY_ANDROID
 		MobclickAgent.setLogEnabled(true);
 		
