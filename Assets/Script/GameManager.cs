@@ -28,6 +28,13 @@ public class GameManager : MonoBehaviour {
 
 	public float staticAngle = 40.0f;
 
+
+
+
+	public AudioClip audio2_4;
+	public AudioClip audio8_16_32_64;
+
+
 	// Use this for initialization
 	void Start () {
 		Social.localUser.Authenticate (ProcessAuthentication);
