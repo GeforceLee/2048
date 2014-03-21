@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour {
 		}
 		GameObject[] gameobjects =  GameObject.FindGameObjectsWithTag("TileText");
 
-
+		int maxValue = 0;
 		GamePostion vector = _game.getVector(lastDirection);
 		Hashtable traversals = _game.buildTraversals(vector);
 		List<int> xList = (List<int>)traversals["x"];
@@ -125,21 +125,9 @@ public class GameManager : MonoBehaviour {
 						GameObject perTile2 = GameObject.Find("Tile"+x2+y2);
 						perTile2.GetComponent<TIleScript>().move(getTilePosition(i,j,0),t.value);
 						perTile2.name = "Tile"+i+j;;
-						if(t.value == 2||t.value == 4 ){
-							audio.clip = audio2_4;
-							audio.Play();
-						}else if(t.value == 8||t.value == 16 || t.value == 32||t.value == 64){
-							audio.clip = audio8_16_32_64;
-							audio.Play();
-						}else if(t.value == 128||t.value == 256 || t.value == 512){
-							audio.clip = audio128_256_512;
-							audio.Play();
-						}else {
-							audio.clip = audio1024_2048;
-							audio.Play();
-						}
 
-
+						if(t.value>maxValue)
+							maxValue = t.value;
 					}else{
 						if(t.previousPosition != null){
 							int x = (int)t.previousPosition["x"];
@@ -161,6 +149,22 @@ public class GameManager : MonoBehaviour {
 
 			}
 		}
+			if(maxValue == 0){
+
+			}else if(maxValue == 2 || maxValue == 4 ){
+				audio.clip = audio2_4;
+				audio.Play();
+			}else if(maxValue == 8||maxValue == 16 || maxValue == 32|| maxValue == 64){
+				audio.clip = audio8_16_32_64;
+				audio.Play();
+			}else if(maxValue == 128||maxValue == 256 || maxValue == 512){
+				audio.clip = audio128_256_512;
+				audio.Play();
+			}else {
+				audio.clip = audio1024_2048;
+				audio.Play();
+			}
+		
 
 		currentScore = _game.score;
 		if (currentScore > hightestScore) {
@@ -181,12 +185,16 @@ public class GameManager : MonoBehaviour {
 
 
 		if(_game.over){
-			audio.clip = audioGame_Over;
-			audio.Play();
 			showUI();
+			playGameOverAudio();
 		}
 	}
 
+	IEnumerator playGameOverAudio(){
+		yield return new WaitForSeconds(0.5f);
+		audio.clip = audioGame_Over;
+		audio.Play();
+	}
 
 	public void showUI(){
 		UI.transform.position = bgObject.transform.position;
