@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-public enum Direction
+public enum MyDirection
 {
 	DirectionUp,
 	DirectionRight,
@@ -82,7 +82,7 @@ public class Game : MonoBehaviour {
 
 
 
-	public void move(Direction direction){
+	public void move(MyDirection direction){
 //		Debug.Log("移动");
 		GamePostion vector = getVector(direction);
 		Hashtable traversals = buildTraversals(vector);
@@ -147,19 +147,19 @@ public class Game : MonoBehaviour {
 
 
 
-	public GamePostion getVector(Direction direction){
+	public GamePostion getVector(MyDirection direction){
 		GamePostion result;
 		switch(direction){
-			case Direction.DirectionUp: 
+			case MyDirection.DirectionUp: 
 				result = new GamePostion(0,-1);
 				break;
-			case Direction.DirectionRight:
+			case MyDirection.DirectionRight:
 				result = new GamePostion(1,0);
 				break;
-			case Direction.DirectionDown:
+			case MyDirection.DirectionDown:
 				result = new GamePostion(0,1);
 				break;
-			case Direction.DirectionLeft:
+			case MyDirection.DirectionLeft:
 				result = new GamePostion(-1,0);
 				break;
 			default:
@@ -220,7 +220,7 @@ public class Game : MonoBehaviour {
 				tile = grid.cellContent(new GamePostion(x,y));
 				if(tile != null){
 					for(int direction=0;direction<4;direction++){
-						GamePostion vector = getVector((Direction)direction);
+						GamePostion vector = getVector((MyDirection)direction);
 						GamePostion cell = new GamePostion(x+vector.x,y+vector.y);
 						Tile other = grid.cellContent(cell);
 						if(other !=null){

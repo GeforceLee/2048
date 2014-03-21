@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour {
 	Vector3 firstPostion;
 	float tileBetween = 1.44f;
 
-	public Direction lastDirection;
+	public MyDirection lastDirection;
 
 
 	public bool enableGameCenter = false;
@@ -200,20 +200,20 @@ public class GameManager : MonoBehaviour {
 
 		switch(direction){
 			case FingerGestures.SwipeDirection.Right:
-			lastDirection = Direction.DirectionRight;
-				_game.move(Direction.DirectionRight);
+			lastDirection = MyDirection.DirectionRight;
+				_game.move(MyDirection.DirectionRight);
 			break;
 		case FingerGestures.SwipeDirection.Up:
-			lastDirection = Direction.DirectionUp;
-			_game.move(Direction.DirectionUp);
+			lastDirection = MyDirection.DirectionUp;
+			_game.move(MyDirection.DirectionUp);
 			break;
 		case FingerGestures.SwipeDirection.Left:
-			lastDirection = Direction.DirectionLeft;
-			_game.move(Direction.DirectionLeft);
+			lastDirection = MyDirection.DirectionLeft;
+			_game.move(MyDirection.DirectionLeft);
 			break;
 		case FingerGestures.SwipeDirection.Down:
-			lastDirection = Direction.DirectionDown;
-			_game.move(Direction.DirectionDown);
+			lastDirection = MyDirection.DirectionDown;
+			_game.move(MyDirection.DirectionDown);
 			break;
 		default :
 			break;

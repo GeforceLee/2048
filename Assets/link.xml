@@ -1,0 +1,6 @@
+<linker>
+	<assembly fullname="mscorlib">
+		<namespace fullname="System.Security.Cryptography" preserve="all"/>
+		<namespace fullname="System.Security.Cryptography.X509Certificates" preserve="all"/>
+	</assembly>
+</linker>
