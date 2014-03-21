@@ -65,7 +65,8 @@ public class GameManager : MonoBehaviour {
 		float y = bgObject.transform.position.y+2.16f;
 		
 		firstPostion = new Vector3(x,y,0f);
-		StartGame();
+//		StartGame();
+		showUI();
 	}
 
 	public void StartGame(){
@@ -197,10 +198,10 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void showUI(){
-		UI.transform.position = bgObject.transform.position;
+		UI.GetComponent<Animator>().SetTrigger("Show");
 	}
 	public void hideUI(){
-		UI.transform.position = new Vector3(10,10,0);
+		UI.GetComponent<Animator>().SetTrigger("Hide");
 	}
 
 	public void showGameCenterScore(){
