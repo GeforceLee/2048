@@ -33,8 +33,10 @@ public class GameManager : MonoBehaviour {
 
 	public AudioClip audio2_4;
 	public AudioClip audio8_16_32_64;
-
-
+	public AudioClip audio128_256_512;
+	public AudioClip audio1024_2048;
+	public AudioClip audioGame_Over;
+	public AudioClip audioOff;
 	// Use this for initialization
 	void Start () {
 		Social.localUser.Authenticate (ProcessAuthentication);
@@ -92,6 +94,8 @@ public class GameManager : MonoBehaviour {
 	void option(bool mov){
 		if(!mov){
 			// have not mov  play audio
+			audio.clip = audioOff;
+			audio.Play();
 			return;
 		}
 		GameObject[] gameobjects =  GameObject.FindGameObjectsWithTag("TileText");
@@ -121,7 +125,19 @@ public class GameManager : MonoBehaviour {
 						GameObject perTile2 = GameObject.Find("Tile"+x2+y2);
 						perTile2.GetComponent<TIleScript>().move(getTilePosition(i,j,0),t.value);
 						perTile2.name = "Tile"+i+j;;
-
+						if(t.value == 2||t.value == 4 ){
+							audio.clip = audio2_4;
+							audio.Play();
+						}else if(t.value == 8||t.value == 16 || t.value == 32||t.value == 64){
+							audio.clip = audio8_16_32_64;
+							audio.Play();
+						}else if(t.value == 128||t.value == 256 || t.value == 512){
+							audio.clip = audio128_256_512;
+							audio.Play();
+						}else {
+							audio.clip = audio1024_2048;
+							audio.Play();
+						}
 
 
 					}else{
@@ -165,6 +181,8 @@ public class GameManager : MonoBehaviour {
 
 
 		if(_game.over){
+			audio.clip = audioGame_Over;
+			audio.Play();
 			showUI();
 		}
 	}
