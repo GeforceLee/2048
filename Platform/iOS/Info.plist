@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>2048</string>
+	<string>t2048</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
@@ -35,18 +35,6 @@
 				<string>your Appkey</string>
 			</array>
 		</dict>
-		<string>CFBundleURLSchemes</string>
-		<string>CFBundleURLSchemes</string>
-		<string>CFBundleURLSchemes</string>
-		<string>CFBundleURLSchemes</string>
-		<string>CFBundleURLSchemes</string>
-		<string>CFBundleURLSchemes</string>
-		<string>CFBundleURLSchemes</string>
-		<string>CFBundleURLSchemes</string>
-		<string>CFBundleURLSchemes</string>
-		<string>CFBundleURLSchemes</string>
-		<string>CFBundleURLSchemes</string>
-		<string>CFBundleURLSchemes</string>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
@@ -56,29 +44,6 @@
 	<false/>
 	<key>UIInterfaceOrientation</key>
 	<string>UIInterfaceOrientationPortrait</string>
-	<key>UILaunchImages~ipad</key>
-	<array>
-		<dict>
-			<key>UILaunchImageMinimumOSVersion</key>
-			<string>7.0</string>
-			<key>UILaunchImageName</key>
-			<string>Default</string>
-			<key>UILaunchImageOrientation</key>
-			<string>Portrait</string>
-			<key>UILaunchImageSize</key>
-			<string>{768, 1024}</string>
-		</dict>
-		<dict>
-			<key>UILaunchImageMinimumOSVersion</key>
-			<string>7.0</string>
-			<key>UILaunchImageName</key>
-			<string>Default</string>
-			<key>UILaunchImageOrientation</key>
-			<string>Portrait</string>
-			<key>UILaunchImageSize</key>
-			<string>{768, 1024}</string>
-		</dict>
-	</array>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>
