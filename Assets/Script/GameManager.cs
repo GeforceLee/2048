@@ -37,9 +37,13 @@ public class GameManager : MonoBehaviour {
 	public AudioClip audio1024_2048;
 	public AudioClip audioGame_Over;
 	public AudioClip audioOff;
+
+
+	public GameObject scorePer;
 	// Use this for initialization
 	void Start () {
 		Social.localUser.Authenticate (ProcessAuthentication);
+
 	}
 
 	void ProcessAuthentication (bool success) {
@@ -166,9 +170,15 @@ public class GameManager : MonoBehaviour {
 				audio.Play();
 			}
 		
-
+		int addScore = _game.score - currentScore;
+		if (addScore > 0) {
+			GameObject go = Instantiate(scorePer,scorePer.transform.position,Quaternion.identity) as GameObject;
+			go.GetComponent<tk2dTextMesh>().text = "+"+addScore;
+		}
 		currentScore = _game.score;
+
 		if (currentScore > hightestScore) {
+
 			PlayerPrefs.SetInt("HightestScore",currentScore);
 			hightestScore = currentScore;
 			hScoreText.GetComponent<tk2dTextMesh>().text = hightestScore.ToString();
