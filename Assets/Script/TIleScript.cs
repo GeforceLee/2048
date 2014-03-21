@@ -31,12 +31,15 @@ public class TIleScript : MonoBehaviour {
 
 	public void setCurrentValue(int value){
 		Color t;
+		Color textColor = new Color(1,1,1);
 		switch(value){
 		case 2:
 			t = color2;
+			textColor = new Color(0.39f,0.35f,0.31f);
 			break;
 		case 4:
 			t = color4;
+			textColor = new Color(0.39f,0.35f,0.31f);
 			break;
 		case 8:
 			t = color8;
@@ -73,6 +76,7 @@ public class TIleScript : MonoBehaviour {
 		string str = ""+value;
 		currentValue = value;
 		text.GetComponent<tk2dTextMesh>().text = str;
+		text.GetComponent<tk2dTextMesh>().color = textColor;
 		if(str.Length >3){
 			text.GetComponent<tk2dTextMesh>().scale = new Vector3(0.55f,0.55f,0.0f);
 		}else if(str.Length == 3){

@@ -25,6 +25,9 @@ public class GameManager : MonoBehaviour {
 
 	public bool enableGameCenter = false;
 
+
+	public float staticAngle = 40.0f;
+
 	// Use this for initialization
 	void Start () {
 		Social.localUser.Authenticate (ProcessAuthentication);
@@ -32,13 +35,13 @@ public class GameManager : MonoBehaviour {
 
 	void ProcessAuthentication (bool success) {
 		if (success) {
-			Debug.Log ("Authenticated, checking achievements");
+//			Debug.Log ("Authenticated, checking achievements");
 			enableGameCenter = true;
 			// Request loaded achievements, and register a callback for processing them
 
 		}
-		else
-			Debug.Log ("Failed to authenticate");
+//		else
+//			Debug.Log ("Failed to authenticate");
 	}
 	
 	
@@ -81,20 +84,20 @@ public class GameManager : MonoBehaviour {
 
 	void option(Game game){
 		GameObject[] gameobjects =  GameObject.FindGameObjectsWithTag("TileText");
-		string row ="";
-		for(int i =0;i<_game.grid.size;i++){
-
-			for(int j =0;j<_game.grid.size;j++){
-				Tile t = _game.grid.cells[j,i];
-				if(t != null){
-					row += " "+t.value+" ";
-				}else{
-					row += "  0  ";
-				}
-			}
-			row +="\n";
-		}
-		Debug.Log(row);
+//		string row ="";
+//		for(int i =0;i<_game.grid.size;i++){
+//
+//			for(int j =0;j<_game.grid.size;j++){
+//				Tile t = _game.grid.cells[j,i];
+//				if(t != null){
+//					row += " "+t.value+" ";
+//				}else{
+//					row += "  0  ";
+//				}
+//			}
+//			row +="\n";
+//		}
+//		Debug.Log(row);
 
 		GamePostion vector = _game.getVector(lastDirection);
 		Hashtable traversals = _game.buildTraversals(vector);
@@ -111,8 +114,8 @@ public class GameManager : MonoBehaviour {
 				if(t != null){
 					GameObject newTile;
 					if(t.mergedFrom != null){
-						Debug.Log(t.mergedFrom[0].ToString());
-						Debug.Log(t.mergedFrom[1].ToString());
+//						Debug.Log(t.mergedFrom[0].ToString());
+//						Debug.Log(t.mergedFrom[1].ToString());
 						int x1 = (int)t.mergedFrom[0].previousPosition["x"];
 						int y1 = (int)t.mergedFrom[0].previousPosition["y"];
 						GameObject perTile1 = GameObject.Find("Tile"+x1+y1);
@@ -126,8 +129,8 @@ public class GameManager : MonoBehaviour {
 						perTile2.name = "Tile"+i+j;;
 
 
-						Debug.Log("merge  form destory x:"+x1+" y:"+y1 +" value:"+t.mergedFrom[0].value);
-						Debug.Log("merge  form change x:"+x2+" y:"+y2 +" yuan value:"+t.mergedFrom[1].value +"  xian:"+t.value);
+//						Debug.Log("merge  form destory x:"+x1+" y:"+y1 +" value:"+t.mergedFrom[0].value);
+//						Debug.Log("merge  form change x:"+x2+" y:"+y2 +" yuan value:"+t.mergedFrom[1].value +"  xian:"+t.value);
 
 					}else{
 						if(t.previousPosition != null){
@@ -136,13 +139,13 @@ public class GameManager : MonoBehaviour {
 							newTile = GameObject.Find("Tile"+x+y);
 							newTile.GetComponent<TIleScript>().move(getTilePosition(i,j),t.value);
 							newTile.name = "Tile"+i+j;
-							Debug.Log("move  form change yuan x:"+x+" y:"+y +"  value:"+t.value +"  xian:"+"Tile"+i+j);
+//							Debug.Log("move  form change yuan x:"+x+" y:"+y +"  value:"+t.value +"  xian:"+"Tile"+i+j);
 						}else{
 							{
 								newTile = Instantiate(tile,getTilePosition(i,j),Quaternion.identity) as GameObject;
 								newTile.GetComponent<TIleScript>().setCurrentValue(t.value);
 								newTile.name = "Tile"+i+j;
-								Debug.Log("new   x:"+i+" y:"+j +" value:"+t.value);
+//								Debug.Log("new   x:"+i+" y:"+j +" value:"+t.value);
 							}
 						}
 					}
@@ -158,10 +161,10 @@ public class GameManager : MonoBehaviour {
 			hScoreText.GetComponent<tk2dTextMesh>().text = hightestScore.ToString();
 			if(enableGameCenter){
 				Social.ReportScore(hightestScore,"com.royalgame.2048.bestscore", result => {
-					if (result)
-						Debug.Log ("Successfully reported achievement progress");
-					else
-						Debug.Log ("Failed to report achievement");
+//					if (result)
+//						Debug.Log ("Successfully reported achievement progress");
+//					else
+//						Debug.Log ("Failed to report achievement");
 				});
 			}
 
@@ -195,29 +198,25 @@ public class GameManager : MonoBehaviour {
 			return;
 		}
 		FingerGestures.SwipeDirection direction = gesture.Direction;
-		Debug.Log("OnSwipe  :"+direction);
-
-
-		switch(direction){
-			case FingerGestures.SwipeDirection.Right:
+		bool isMoved = false;
+		if(Vector2.Angle(gesture.Move,Vector2.right) < staticAngle){
 			lastDirection = MyDirection.DirectionRight;
-				_game.move(MyDirection.DirectionRight);
-			break;
-		case FingerGestures.SwipeDirection.Up:
+			isMoved = true;
+		}else if(Vector2.Angle(gesture.Move,Vector2.up) < staticAngle ){
 			lastDirection = MyDirection.DirectionUp;
-			_game.move(MyDirection.DirectionUp);
-			break;
-		case FingerGestures.SwipeDirection.Left:
+			isMoved = true;
+		}else if(Vector2.Angle(gesture.Move,Vector2.right) >  180 - staticAngle ){
 			lastDirection = MyDirection.DirectionLeft;
-			_game.move(MyDirection.DirectionLeft);
-			break;
-		case FingerGestures.SwipeDirection.Down:
+			isMoved = true;
+		}else if(Vector2.Angle(gesture.Move,Vector2.up) > 180 - staticAngle ){
 			lastDirection = MyDirection.DirectionDown;
-			_game.move(MyDirection.DirectionDown);
-			break;
-		default :
-			break;
+			isMoved = true;
 		}
+		if(isMoved){
+			_game.move(lastDirection);
+		}
+
+
 
 	}
 }

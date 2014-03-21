@@ -103,8 +103,8 @@ public class Game : MonoBehaviour {
 					Tile next = grid.cellContent((GamePostion)postions["next"]);
 					if(next !=null && next.value == tile.value && next.mergedFrom == null){
 
-						Debug.Log("找到合并的tile :"+tile.ToString());
-						Debug.Log("找到合并的next :"+next.ToString());
+//						Debug.Log("找到合并的tile :"+tile.ToString());
+//						Debug.Log("找到合并的next :"+next.ToString());
 						Tile merged = new Tile((GamePostion)postions["next"],tile.value*2);
 						merged.mergedFrom = new Tile[]{tile,next};
 
@@ -135,11 +135,11 @@ public class Game : MonoBehaviour {
 			addRandomTile();
 			if(!movesAvailable()){
 
-				Debug.Log("GameOver");
+//				Debug.Log("GameOver");
 				this.over = true;
 			}
 			actuate();
-			Debug.Log("move le");
+//			Debug.Log("move le");
 		}
 		Debug.Log("移动结束");
 	}
