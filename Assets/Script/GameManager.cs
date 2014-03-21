@@ -186,7 +186,7 @@ public class GameManager : MonoBehaviour {
 
 		if(_game.over){
 			showUI();
-			playGameOverAudio();
+			StartCoroutine(playGameOverAudio());
 		}
 	}
 
