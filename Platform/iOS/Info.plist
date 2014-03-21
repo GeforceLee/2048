@@ -36,6 +36,8 @@
 			</array>
 		</dict>
 		<string>CFBundleURLSchemes</string>
+		<string>CFBundleURLSchemes</string>
+		<string>CFBundleURLSchemes</string>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
