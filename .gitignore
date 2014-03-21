@@ -38,3 +38,7 @@ DerivedData
 # Pods/
 
 
+
+Assets/Material.meta
+
+Assets/Plugins/Android/res/drawable-ldpi.meta
