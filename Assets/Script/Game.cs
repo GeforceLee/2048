@@ -28,7 +28,7 @@ public class Game : MonoBehaviour {
 
 
 		addStartTiles();
-		actuate();
+		actuate(true);
 	}
 
 
@@ -48,8 +48,8 @@ public class Game : MonoBehaviour {
 	}
 
 
-	public void actuate(){
-		gameObject.BroadcastMessage("option",this);
+	public void actuate(bool moved){
+		gameObject.BroadcastMessage("option",moved);
 	}
 
 
@@ -134,13 +134,13 @@ public class Game : MonoBehaviour {
 		if(moved){
 			addRandomTile();
 			if(!movesAvailable()){
-
 //				Debug.Log("GameOver");
 				this.over = true;
 			}
-			actuate();
+//			actuate();
 //			Debug.Log("move le");
 		}
+		actuate(moved);
 		Debug.Log("移动结束");
 	}
 

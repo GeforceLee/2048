@@ -82,22 +82,13 @@ public class GameManager : MonoBehaviour {
 	}
 
 
-	void option(Game game){
+	void option(bool mov){
+		if(!mov){
+			// have not mov  play audio
+			return;
+		}
 		GameObject[] gameobjects =  GameObject.FindGameObjectsWithTag("TileText");
-//		string row ="";
-//		for(int i =0;i<_game.grid.size;i++){
-//
-//			for(int j =0;j<_game.grid.size;j++){
-//				Tile t = _game.grid.cells[j,i];
-//				if(t != null){
-//					row += " "+t.value+" ";
-//				}else{
-//					row += "  0  ";
-//				}
-//			}
-//			row +="\n";
-//		}
-//		Debug.Log(row);
+
 
 		GamePostion vector = _game.getVector(lastDirection);
 		Hashtable traversals = _game.buildTraversals(vector);
@@ -108,14 +99,10 @@ public class GameManager : MonoBehaviour {
 			for(int jj=0;jj<4;jj++){
 				int j = yList[jj];
 
-//		for(int i =0;i<_game.grid.size;i++){
-//			for(int j =0;j<_game.grid.size;j++){
 				Tile t = _game.grid.cells[i,j];
 				if(t != null){
 					GameObject newTile;
 					if(t.mergedFrom != null){
-//						Debug.Log(t.mergedFrom[0].ToString());
-//						Debug.Log(t.mergedFrom[1].ToString());
 						int x1 = (int)t.mergedFrom[0].previousPosition["x"];
 						int y1 = (int)t.mergedFrom[0].previousPosition["y"];
 						GameObject perTile1 = GameObject.Find("Tile"+x1+y1);
@@ -129,8 +116,6 @@ public class GameManager : MonoBehaviour {
 						perTile2.name = "Tile"+i+j;;
 
 
-//						Debug.Log("merge  form destory x:"+x1+" y:"+y1 +" value:"+t.mergedFrom[0].value);
-//						Debug.Log("merge  form change x:"+x2+" y:"+y2 +" yuan value:"+t.mergedFrom[1].value +"  xian:"+t.value);
 
 					}else{
 						if(t.previousPosition != null){
@@ -154,7 +139,7 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 
-		currentScore = game.score;
+		currentScore = _game.score;
 		if (currentScore > hightestScore) {
 			PlayerPrefs.SetInt("HightestScore",currentScore);
 			hightestScore = currentScore;

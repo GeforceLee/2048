@@ -28,7 +28,7 @@ public class Tile{
 	}
 
 	public void updatePostion(GamePostion position){
-		Debug.Log("updatePostion:" + position.ToString() + "  yuan x:"+this.x+"    y:"+this.y);
+//		Debug.Log("updatePostion:" + position.ToString() + "  yuan x:"+this.x+"    y:"+this.y);
 		this.x = position.x;
 		this.y = position.y;
 	}
