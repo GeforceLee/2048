@@ -65,8 +65,8 @@ public class GameManager : MonoBehaviour {
 		float y = bgObject.transform.position.y+2.16f;
 		
 		firstPostion = new Vector3(x,y,0f);
-//		StartGame();
-		showUI();
+		StartGame();
+//		showUI();
 	}
 
 	public void StartGame(){
