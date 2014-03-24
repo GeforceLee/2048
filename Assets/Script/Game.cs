@@ -41,6 +41,8 @@ public class Game : MonoBehaviour {
 	public void addRandomTile(){
 		if (grid.cellsAvailable()) {
 			int value = Random.Range(0,10) < 8 ? 2 : 4;
+			//int value = Random.Range(0,10) < 8 ? 512 : 1024;
+
 			Tile tile = new Tile(grid.randomAvailableCell(), value);
 			
 			grid.insertTile(tile);

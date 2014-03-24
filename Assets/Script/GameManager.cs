@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+
 public class GameManager : MonoBehaviour {
 
 	private int currentScore = 0;
@@ -22,15 +24,10 @@ public class GameManager : MonoBehaviour {
 
 	public MyDirection lastDirection;
 
-
 	public bool enableGameCenter = false;
-
-
+	
 	public float staticAngle = 40.0f;
-
-
-
-
+	
 	public AudioClip audio2_4;
 	public AudioClip audio8_16_32_64;
 	public AudioClip audio128_256_512;
@@ -40,6 +37,9 @@ public class GameManager : MonoBehaviour {
 
 
 	public GameObject scorePer;
+
+	float prevTime = 0.0f;
+	public float moveDuring = 0.2f;
 	// Use this for initialization
 	void Start () {
 		Social.localUser.Authenticate (ProcessAuthentication);
@@ -86,6 +86,7 @@ public class GameManager : MonoBehaviour {
 		_game = gameObject.GetComponent<Game>();
 		_game.setup(4);
 		hideUI();
+		prevTime = moveDuring;
 
 	}
 
@@ -222,30 +223,53 @@ public class GameManager : MonoBehaviour {
 
 	void OnSwipe( SwipeGesture gesture ) 
 	{
-		
-		if(_game.over){
-			return;
-		}
+		if(_game.over){ return; }
 		FingerGestures.SwipeDirection direction = gesture.Direction;
 		bool isMoved = false;
 		if(Vector2.Angle(gesture.Move,Vector2.right) < staticAngle){
 			lastDirection = MyDirection.DirectionRight;
 			isMoved = true;
-		}else if(Vector2.Angle(gesture.Move,Vector2.up) < staticAngle ){
+		}else if(Vector2.Angle(gesture.Move,Vector2.up) < staticAngle){
 			lastDirection = MyDirection.DirectionUp;
 			isMoved = true;
-		}else if(Vector2.Angle(gesture.Move,Vector2.right) >  180 - staticAngle ){
+		}else if(Vector2.Angle(gesture.Move,Vector2.right) >  180 - staticAngle){
 			lastDirection = MyDirection.DirectionLeft;
 			isMoved = true;
-		}else if(Vector2.Angle(gesture.Move,Vector2.up) > 180 - staticAngle ){
+		}else if(Vector2.Angle(gesture.Move,Vector2.up) > 180 - staticAngle){
 			lastDirection = MyDirection.DirectionDown;
 			isMoved = true;
 		}
 		if(isMoved){
 			_game.move(lastDirection);
 		}
+	}
+
+	void FixedUpdate(){
+		if(_game.over ) { return; }
+		bool isMoved = false;
+
+		if(Input.GetKeyDown("right")){
+			lastDirection = MyDirection.DirectionRight;
+			isMoved = true;
+		}else if(Input.GetKeyDown("up")){
+			lastDirection = MyDirection.DirectionUp;
+			isMoved = true;
+		}else if(Input.GetKeyDown("left")){
+			lastDirection = MyDirection.DirectionLeft;
+			isMoved = true;
+		}else if(Input.GetKeyDown("down")){
+			lastDirection = MyDirection.DirectionDown;
+			isMoved = true;
+		}
+		prevTime+= Time.deltaTime;
+		if(isMoved){
+			Debug.Log(prevTime);
+			if(prevTime >= moveDuring){
+				_game.move(lastDirection);
+				prevTime = 0;
+			}
 
 
-
+		}
 	}
 }
