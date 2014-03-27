@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.unity3d.player"
+    package="com.royalgame.2048TV"
 	android:installLocation="preferExternal"
     android:versionCode="1"
     android:versionName="1.0">
@@ -52,6 +52,8 @@
      <meta-data android:value="qq" android:name="UMENG_CHANNEL"/>
     </application>
 	<uses-feature android:glEsVersion="0x00010001" />
+	<uses-feature android:name="android.hardware.type.television" android:required="true">
+	</uses-feature>
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
   <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission  android:name="android.permission.INTERNET"/>
