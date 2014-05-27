@@ -100,7 +100,7 @@ public class TIleScript : MonoBehaviour {
 
 
 	public void move(Vector3 target,int value){
-		Debug.Log("move target value:"+ value  +"  currentValue:"+currentValue +" moved:"+moved);
+//		Debug.Log("move target value:"+ value  +"  currentValue:"+currentValue +" moved:"+moved);
 		if(!moved){
 			movedTime = 0;
 			targetPostion = target;

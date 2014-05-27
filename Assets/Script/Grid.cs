@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 
 public class Grid{
-	public int size;
+	public int size = 4;
 	public Tile[,] cells;
 	public Grid(int size){
 		this.size = size;
@@ -12,7 +12,26 @@ public class Grid{
 
 	}
 
+	public string GameSave(){
+		string gameSave = "";
+		for(int i = 0; i < this.size;i++){
+			for(int j = 0; j < this.size;j++){
+				Tile t = this.cells[i,j];
+				if(t == null){
+					gameSave+=0;
+				}else{
+					gameSave+=t.value;
+				}
+				if(i+j<6){
+					gameSave+=",";
+				}
+			}
+		}
+		return gameSave;
+	}
+	public void LoadGameSave(){
 
+	}
 	public List<GamePostion> availableCells(){
 		List<GamePostion> cells =  new List<GamePostion>();
 		for(int i = 0; i < this.size;i++){
@@ -57,12 +76,12 @@ public class Grid{
 
 
 	public void insertTile(Tile tile){
-		Debug.Log("insertTile x:"+tile.x + "  y:"+tile.y);
+//		Debug.Log("insertTile x:"+tile.x + "  y:"+tile.y);
 		this.cells[tile.x,tile.y] = tile;
 	}
 
 	public void removeTile(Tile tile){
-		Debug.Log("removeTile x:"+tile.x + "  y:"+tile.y);
+//		Debug.Log("removeTile x:"+tile.x + "  y:"+tile.y);
 		this.cells[tile.x,tile.y] = null;
 	}
 

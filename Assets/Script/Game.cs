@@ -30,8 +30,25 @@ public class Game : MonoBehaviour {
 		addStartTiles();
 		actuate(true);
 	}
+	public void load(int s,string save,int sc){
+		size = s;
+		grid = new Grid(s);
+		score = sc;
+		over = false;
+		addLoadTiles(save);
+		actuate(true);
+	}
+	public void addLoadTiles(string st){
+		string[] sArray = st.Split(',');
+		for(int i = 0,length = sArray.Length;i<length;i++){
+			int sc = int.Parse(sArray[i]);
+			if(sc>0){
+				Tile tile = new Tile(new GamePostion(i/size,i%size), sc);
+				grid.insertTile(tile);
+			}
 
-
+		}
+	}
 	public void addStartTiles(){
 		for (int i = 0; i < startTiles; i++) {
 			addRandomTile();

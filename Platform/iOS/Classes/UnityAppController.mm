@@ -1,6 +1,3 @@
-
-#import "../Libraries/UniSocialNativeToolkit.h"
-#import "../Libraries/WXApi.h"
 #import "UnityAppController.h"
 #import "iPhone_Sensors.h"
 

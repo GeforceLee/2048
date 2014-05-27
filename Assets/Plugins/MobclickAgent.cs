@@ -30,8 +30,8 @@ public sealed class MobclickAgent:MonoBehaviour {
 //SENDWIFIONLY = 5    //send log when wifi connected
 		
 		MobclickAgent.StartWithAppKeyAndReportPolicyAndChannelId("532ac9d156240b2cea0044c4",5,"Apple");
-//		MobclickAgent.SetAppVersion("1.0");
-//		MobclickAgent.SetLogSendInterval(20);
+		MobclickAgent.SetAppVersion("1.2");
+		MobclickAgent.SetLogSendInterval(20);
 //		JsonData eventAttributes = new JsonData();
 //		eventAttributes["username"] = "Aladdin";
 //		eventAttributes["company"] = "Umeng Inc.";
